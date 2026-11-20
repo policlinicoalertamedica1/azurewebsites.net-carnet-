@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carnet</title>
+<link rel="icon" href="favicon.png">
+<style>
+  :root{
+    --primary:#50318b;
+    --success:#0bba83;
+    --text:#424242;
+    --border:rgba(0,0,0,.2);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:#fafafa}
+  .content{max-width:900px;margin:0 auto;padding:24px 16px 40px}
+  h4{font-size:2.125rem;font-weight:400;line-height:1.235;letter-spacing:.00735em;margin:0 0 16px;color:var(--primary)}
+  .stack{display:flex;flex-direction:column;gap:12px}
+  .paper.stack{gap:4px}
+  .paper{background:#fff;color:rgba(0,0,0,.87);border-radius:4px;padding:12px;box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)}
+  h5{font-size:1.5rem;font-weight:400;line-height:1.334;letter-spacing:0;margin:0;color:#424242}
+  p{font-size:1rem;font-weight:400;line-height:1.5;letter-spacing:.00938em;margin:0;color:#212121}
+  p.primary{color:#594ae2}
+  .chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:16px;background:var(--success);color:#fff;font-size:.8125rem;font-weight:500;margin:16px 0 0;cursor:pointer;transition:filter .15s}
+  .chip:hover{filter:brightness(1.08)}
+  .viewer{margin-top:8px}
+  iframe{width:100%;height:80vh;border:1px solid var(--border);border-radius:4px;background:#fff}
+  .pick{margin-top:12px;font-size:.9rem}
+  .pick label{display:inline-block;padding:8px 14px;background:var(--primary);color:#fff;border-radius:4px;cursor:pointer;font-weight:500}
+  .pick input{display:none}
+  .hint{color:#757575;font-size:.85rem;margin-top:8px}
+</style>
+</head>
+<body>
+<article class="content">
+
+  <h4>SERVICIO MÉDICO INTELIGENTE ROSAFORT SAC</h4>
+
+  <div class="stack">
+    <div class="paper stack">
+      <h5>Código: <span id="codigo">18068-869734</span></h5>
+      <p class="primary">Nombres: <span id="nombres">HUAMANI MENDO GIOVANI AARON</span></p>
+      <p>Respuesta: <span id="respuesta">Iniciado</span></p>
+      <p>Llama al: <span id="telefono"></span></p>
+    </div>
+  </div>
+  <br>
+  <div class="viewer">
+   <iframe id="pdf" src="documento.pdf" title="Documento PDF"></iframe>
+  </div>
+
+  <div class="chip" id="reload" role="button" tabindex="0">Recargar página</div>
+
+</article>
+
+<script>
+  // Datos editables rápido: cambia esto o pásalos por la URL (?cod=...&nombres=...&respuesta=...&tel=...&pdf=...)
+  const q = new URLSearchParams(location.search);
+  const set = (id, key) => { if (q.get(key)) document.getElementById(id).textContent = q.get(key); };
+  set('codigo','cod'); set('nombres','nombres'); set('respuesta','respuesta'); set('telefono','tel');
+  if (q.get('pdf')) document.getElementById('pdf').src = q.get('pdf');
+
+  const reload = document.getElementById('reload');
+  reload.addEventListener('click', () => location.reload());
+  reload.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') location.reload(); });
+</script>
+</body>
+</html>
